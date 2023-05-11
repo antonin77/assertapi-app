@@ -31,6 +31,7 @@
                     <mat-form-field style="width: 50%;" appearance="fill">
                         <mat-label>Application actuelle</mat-label>
                         <mat-select formControlName="app">
+                            <mat-option>-- Aucune donnée --</mat-option>
                             <mat-option *ngFor="let app of actualApps" [value]="app.value">{{app.name}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="actualApp.hasError('required')">L'application est obligatoire
@@ -39,6 +40,7 @@
                     <mat-form-field style="width: 50%;" appearance="fill">
                         <mat-label>Environnement actuel</mat-label>
                         <mat-select formControlName="env">
+                            <mat-option>-- Aucune donnée --</mat-option>
                             <mat-option *ngFor="let env of actualEnvs" [value]="env.value">{{env.name}}</mat-option>
                         </mat-select>
                         <mat-error *ngIf="actualEnv.hasError('required')">L'environnement est obligatoire
@@ -71,6 +73,7 @@
                     <mat-form-field style="width: 50%;" appearance="fill">
                         <mat-label>Application attendue</mat-label>
                         <mat-select formControlName="app">
+                            <mat-option>-- Aucune donnée --</mat-option>
                             <mat-option *ngFor="let app of expectedApps" [value]="app.value">{{app.name}}
                             </mat-option>
                         </mat-select>
@@ -80,6 +83,7 @@
                     <mat-form-field style="width: 50%;" appearance="fill">
                         <mat-label>Environnement attendu</mat-label>
                         <mat-select formControlName="env">
+                            <mat-option>-- Aucune donnée --</mat-option>
                             <mat-option *ngFor="let env of expectedEnvs" [value]="env.value">{{env.name}}
                             </mat-option>
                         </mat-select>

@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatExpansionPanelHeader } from '@angular/material/expansion';
 import { DiffEditorModel } from 'ngx-monaco-editor-v2';
 import { ApiRequest, ApiRequestServer } from 'src/app/model/request.model';
-import { AssertionResultServer, RequestExecution, ApiResponseServer, ComparatorData, ResponseComparator } from 'src/app/model/trace.model';
+import { AssertionResultServer, RequestExecution, ApiResponseServer, ComparatorData, ResponseComparator, ApiTrace } from 'src/app/model/trace.model';
 
 @Component({
   selector: 'app-comparator',
@@ -33,7 +33,7 @@ export class ComparatorDialogComponent implements OnInit, AfterViewInit {
     }
   };
 
-  request: ApiRequest;
+  apiTrace: ApiTrace;
 
   originalModel: DiffEditorModel;
   modifiedModel: DiffEditorModel;
@@ -44,9 +44,9 @@ export class ComparatorDialogComponent implements OnInit, AfterViewInit {
   ) { }
 
   ngOnInit(): void {
-    this.request = this.data.request;
-    this.request.body = JSON.stringify(JSON.parse(this.data.responseComparator.exp.response), null, 1);
-    this.request.headers = JSON.parse(this.data.responseComparator.exp.response);
+    this.apiTrace = this.data.apiTrace;
+    this.apiTrace.requestBody = JSON.stringify(JSON.parse(this.data.responseComparator.exp.response), null, 1);
+    this.apiTrace.requestHeaders = JSON.parse(this.data.responseComparator.exp.response);
     this.originalModel = this.toCode(this.data.responseComparator.act);
     this.modifiedModel = this.toCode(this.data.responseComparator.exp);
   }

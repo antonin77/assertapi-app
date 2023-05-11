@@ -14,7 +14,7 @@ export class EnvironmentService extends AssertapiClientService {
 
     getEnvironments(): Observable<void> {
         this._environments.next([]);
-        let url: string = `${environment.server}/v1/assert/api/environment`;
+        let url: string = `${environment.server}/v1/modelization/environment`;
         return this.get(url).pipe(
             tap(e => this._environments.next(e)),
             map((_) => {})
@@ -22,7 +22,7 @@ export class EnvironmentService extends AssertapiClientService {
     }
 
     putEnvironment(apiServerConfig: ApiServerConfig): Observable<void> {
-        let url: string = `${environment.server}/v1/assert/api/environment`;
+        let url: string = `${environment.server}/v1/modelization/environment`;
         return this.put(url, apiServerConfig).pipe(
             tap(id => {
                 apiServerConfig.id = id;
@@ -35,7 +35,7 @@ export class EnvironmentService extends AssertapiClientService {
     }
 
     updateEnvironment(apiServerConfig: ApiServerConfig): Observable<void> {
-        let url: string = `${environment.server}/v1/assert/api/environment`;
+        let url: string = `${environment.server}/v1/modelization/environment`;
         return this.post(url, apiServerConfig).pipe(
             tap(() => {
                 var envs = this._environments.value;
@@ -47,7 +47,7 @@ export class EnvironmentService extends AssertapiClientService {
     }
 
     deleteEnvironment(ids: number[]): Observable<void> {
-        let url: string = `${environment.server}/v1/assert/api/environment`;
+        let url: string = `${environment.server}/v1/modelization/environment`;
         return this.delete(url, { 'id': ids.map(id => id.toString()) }).pipe(
             tap(() => {
                 var envs = this._environments.value;

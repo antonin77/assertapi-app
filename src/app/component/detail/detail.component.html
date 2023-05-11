@@ -73,15 +73,15 @@
                     <div style="overflow: hidden;"
                         [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
                         <mat-list style="width: 100%;">
-                            <mat-list-item style="height: 50px;" *ngFor="let assertionResult of element.results">
+                            <mat-list-item style="height: 50px;" *ngFor="let apiTrace of element.results">
                                 <mat-icon mat-list-icon 
-                                    [ngStyle]="{color:status[assertionResult.result.status]['color']}">
-                                    {{status[assertionResult.result.status]['icon']}}</mat-icon>
+                                    [ngStyle]="{color:status[apiTrace.assertionStatus]['color']}">
+                                    {{status[apiTrace.assertionStatus]['icon']}}</mat-icon>
 
-                                <div mat-line style="font-size: 14px;">{{assertionResult.request.description}}</div>
-                                <button *ngIf="configuration && element.status != 'SKIP'" mat-icon-button style="margin-left: 1em;"
+                                <div mat-line style="font-size: 14px;">{{apiTrace.requestDescription}}</div>
+                                <button *ngIf="configuration && apiTrace.assertionStatus != 'SKIP'" mat-icon-button style="margin-left: 1em;"
                                     matTooltip="Voir la difference des reponses" matTooltipPosition="left"
-                                    (click)="compare(assertionResult.request)">
+                                    (click)="compare(apiTrace)">
                                     <mat-icon color="primary">
                                         difference
                                     </mat-icon>

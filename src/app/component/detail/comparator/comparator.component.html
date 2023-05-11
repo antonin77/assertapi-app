@@ -8,10 +8,10 @@
             <mat-expansion-panel-header #requestPanelHeader>
                 <mat-panel-title>
                     <mat-icon class="material-icons-outlined" style="margin-right: 0.5em;">info</mat-icon>
-                    {{request.method}}
+                    {{apiTrace.requestMethod}}
                 </mat-panel-title>
                 <mat-panel-description>
-                    {{request.uri}}
+                    {{apiTrace.requestUri}}
                 </mat-panel-description>
             </mat-expansion-panel-header>
             <div style="display: flex;">
@@ -22,7 +22,7 @@
                         <mat-divider style="display: flex; flex-grow: 1; margin-left: 1em;"></mat-divider>
                     </div>
                     <ngx-monaco-editor style="width: 100%; margin-top: 1em;" [options]="editorOptions"
-                    [(ngModel)]="request.body"></ngx-monaco-editor>
+                    [(ngModel)]="apiTrace.requestBody"></ngx-monaco-editor>
                 </div>
                 <div style="width: 50%;">
                     <div style="display: flex; justify-content: center; align-items: center; margin-bottom: 1em;">
@@ -31,7 +31,7 @@
                         <mat-divider style="display: flex; flex-grow: 1; margin-left: 1em;"></mat-divider>
                     </div>
                     <ngx-monaco-editor style="width: 100%; margin-top: 1em;" [options]="editorOptions"
-                        [(ngModel)]="request.body"></ngx-monaco-editor>
+                        [(ngModel)]="apiTrace.requestBody"></ngx-monaco-editor>
                 </div>
                 
                 

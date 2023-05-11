@@ -14,7 +14,7 @@ export class RequestService extends AssertapiClientService {
 
     getRequests(): Observable<void> {
         this._requests.next([]);
-        let url: string = `${environment.server}/v1/assert/api/request/all`;
+        let url: string = `${environment.server}/v1/modelization/request`;
         return this.get(url).pipe(
             tap(r => this._requests.next(r)),
             map((_) => {})
@@ -22,7 +22,7 @@ export class RequestService extends AssertapiClientService {
     }
 
     putRequest(apiRequestServer: ApiRequestServer): Observable<void> {
-        let url: string = `${environment.server}/v1/assert/api/request`;
+        let url: string = `${environment.server}/v1/modelization/request`;
         return this.put(url, apiRequestServer).pipe(
             tap(id => {
                 apiRequestServer.request.id = id;
@@ -35,7 +35,7 @@ export class RequestService extends AssertapiClientService {
     }
 
     updateRequest(apiRequestServer: ApiRequestServer): Observable<void> {
-        let url: string = `${environment.server}/v1/assert/api/request`;
+        let url: string = `${environment.server}/v1/modelization/request`;
         return this.post(url, apiRequestServer).pipe(
             tap(() => {
                 var requests = this._requests.value;
@@ -47,7 +47,7 @@ export class RequestService extends AssertapiClientService {
     }
 
     deleteRequest(ids: number[]): Observable<void> {
-        let url: string = `${environment.server}/v1/assert/api/request`;
+        let url: string = `${environment.server}/v1/modelization/request`;
         return this.delete(url, { 'id': ids.map(id => id.toString()) }).pipe(
             tap(() => {
                 var requests = this._requests.value;
@@ -61,12 +61,12 @@ export class RequestService extends AssertapiClientService {
     }
 
     enableRequest(ids: number[]): Observable<void> {
-        let url: string = `${environment.server}/v1/assert/api/request/enable`;
+        let url: string = `${environment.server}/v1/modelization/request/enable`;
         return this.patch(url, { 'id': ids.map(id => id.toString()) });
     }
 
     disableRequest(ids: number[]): Observable<void> {
-        let url: string = `${environment.server}/v1/assert/api/request/disable`;
+        let url: string = `${environment.server}/v1/modelization/request/disable`;
         return this.patch(url, { 'id': ids.map(id => id.toString()) });
     }
 }

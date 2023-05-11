@@ -34,7 +34,7 @@ export class LaunchComponent implements OnInit, AfterViewInit {
   hide: boolean = true;
 
   actualForm = new FormGroup<LaunchForm>({
-    app: new FormControl<string>(null, Validators.required),
+    app: new FormControl<string>(null),
     env: new FormControl<string>(null, Validators.required),
     loginForm: new FormGroup<LoginForm>({
       type: new FormControl<LoginTypeEnum>(null, Validators.required),
@@ -44,7 +44,7 @@ export class LaunchComponent implements OnInit, AfterViewInit {
   });
 
   expectedForm = new FormGroup<LaunchForm>({
-    app: new FormControl<string>(null, Validators.required),
+    app: new FormControl<string>(null),
     env: new FormControl<string>(null, Validators.required),
     loginForm: new FormGroup<LoginForm>({
       type: new FormControl<LoginTypeEnum>(null, Validators.required),
@@ -77,6 +77,10 @@ export class LaunchComponent implements OnInit, AfterViewInit {
         this.environments = envs;
         this.actualApps = Array.from(new Set(this.environments.filter(e => this.requests.map(t => t.requestGroupList[0].app).includes(e.app)).map(d => d.app))).map(a => ({ name: a, value: a }));
         this.expectedApps = Array.from(new Set(this.environments.filter(e => this.requests.map(t => t.requestGroupList[0].app).includes(e.app)).map(d => d.app))).map(a => ({ name: a, value: a }));
+        if(this.actualApps.length && this.expectedApps.length) {
+          this.actualApp.addValidators(Validators.required);
+          this.expectedApp.addValidators(Validators.required);
+        }
       }
     });
   }
@@ -102,7 +106,7 @@ export class LaunchComponent implements OnInit, AfterViewInit {
       next: res => {
         var environment = this.environments.find(d => d.app == this.actualApp.value && d.env == res).serverConfig;
         this.actualLoginType.setValue(environment.auth.type);
-        if (this.actualLoginType.value !== 'NOVA_BASIC' && this.actualLoginType.value !== 'BASIC') {
+        if (this.actualLoginType.value !== 'BASIC') {
           this.actualLoginUsername.disable();
           this.actualLoginpassword.disable();
         }
@@ -125,7 +129,7 @@ export class LaunchComponent implements OnInit, AfterViewInit {
       next: res => {
         var environment = this.environments.find(d => d.app == this.expectedApp.value && d.env == res).serverConfig;
         this.expectedLoginType.setValue(environment.auth.type);
-        if (this.actualLoginType.value !== 'NOVA_BASIC' && this.actualLoginType.value !== 'BASIC') {
+        if (this.actualLoginType.value !== 'BASIC') {
           this.expectedLoginUsername.disable();
           this.expectedLoginpassword.disable();
         }
@@ -205,7 +209,7 @@ export class LaunchComponent implements OnInit, AfterViewInit {
     return <FormGroup<LoginForm>>this.actualForm.get('loginForm');
   }
 
-  get actualLoginType(): AbstractControl<string> {
+  get actualLoginType(): AbstractControl<LoginTypeEnum> {
     return this.actualLogin.get('type');
   }
 
@@ -229,7 +233,7 @@ export class LaunchComponent implements OnInit, AfterViewInit {
     return <FormGroup<LoginForm>>this.expectedForm.get('loginForm');
   }
 
-  get expectedLoginType(): AbstractControl<string> {
+  get expectedLoginType(): AbstractControl<LoginTypeEnum> {
     return this.expectedLogin.get('type');
   }
 

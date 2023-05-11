@@ -14,7 +14,7 @@ import { combineLatest, distinctUntilChanged, filter, forkJoin } from 'rxjs';
 import { ApiServerConfig, LoginTypeEnum } from 'src/app/model/environment.model';
 import { LaunchForm, LoginForm } from 'src/app/model/form.model';
 import { ApiRequest, ApiRequestServer, Configuration } from 'src/app/model/request.model';
-import { AssertionResult, AssertionResultServer, RequestExecution, ApiTraceGroup, AssertionContext, ResponseComparator } from 'src/app/model/trace.model';
+import { AssertionResult, AssertionResultServer, RequestExecution, ApiTraceGroup, AssertionContext, ResponseComparator, ApiTrace } from 'src/app/model/trace.model';
 import { EnvironmentService } from 'src/app/service/environment.service';
 import { MainService } from 'src/app/service/main.service';
 import { RequestService } from 'src/app/service/request.service';
@@ -131,10 +131,10 @@ export class ResultView implements OnInit, AfterViewInit {
 
 export class ResultGroup {
   name: string;
-  results: Array<AssertionResultServer>;
+  results: Array<ApiTrace>;
 
 
-  constructor(name: string, results: Array<AssertionResultServer>) {
+  constructor(name: string, results: Array<ApiTrace>) {
     this.name = name;
     this.results = results;
   }

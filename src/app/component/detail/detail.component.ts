@@ -9,7 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, distinctUntilChanged, filter } from 'rxjs';
 import { ApiRequest, Configuration } from 'src/app/model/request.model';
-import { AssertionResultServer, AssertionContext, ApiTraceGroup } from 'src/app/model/trace.model';
+import { AssertionResultServer, AssertionContext, ApiTraceGroup, ApiTrace } from 'src/app/model/trace.model';
 import { MainService } from 'src/app/service/main.service';
 import { TraceService } from 'src/app/service/trace.service';
 import { ResultGroup } from '../result/result.view';
@@ -98,11 +98,11 @@ export class DetailComponent implements OnInit, AfterViewInit {
             ([traces, traceGroup]) => {
               this.traceGroup = traceGroup;
               var resultGroups = traces.reduce((prev, current) => {
-                let groupIndex = prev.findIndex(a => a.name == current.request.name);
+                let groupIndex = prev.findIndex(a => a.name == current.requestName);
                 if (groupIndex != -1) {
                   prev[groupIndex].results.push(current);
                 } else {
-                  const resultGroup = new ResultGroup(current.request.name, [current]);
+                  const resultGroup = new ResultGroup(current.requestName, [current]);
                   prev.push(resultGroup);
                 }
                 return prev;
@@ -156,12 +156,12 @@ export class DetailComponent implements OnInit, AfterViewInit {
     // return this.resultDataSource?.data.filter(d => d.result && d.result?.status != 'OK');
   }
 
-  compare(request: ApiRequest) {
-    this._service.rerun(request.id, this.configuration).subscribe({
+  compare(apiTrace: ApiTrace) {
+    this._service.rerun(apiTrace.requestId, this.configuration).subscribe({
       next: res => {
         this.dialog.open(ComparatorDialogComponent, {
           data: {
-            request: request,
+            request: apiTrace,
             responseComparator: res
           }
         });
@@ -170,7 +170,7 @@ export class DetailComponent implements OnInit, AfterViewInit {
   }
 
   replay() {
-    this._service.run(this.traceGroup.app, this.traceGroup.actualEnv, this.traceGroup.expectedEnv, this.resultSelection.selected.flatMap(s => s.results.map(r => r.request.id)), false, this.configuration)
+    this._service.run(this.traceGroup.app, this.traceGroup.actualEnv, this.traceGroup.expectedEnv, this.resultSelection.selected.flatMap(s => s.results.map(r => r.requestId)), false, this.configuration)
       .subscribe(
         res => this.router.navigate(['home/launch', res])
       );

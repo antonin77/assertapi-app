@@ -22,7 +22,5 @@ export class ApiServerConfig {
 
 export enum LoginTypeEnum {
     BASIC = 'BASIC',
-    NOVA_BASIC = 'NOVA_BASIC', 
-    NOVA_TOKEN = 'NOVA_TOKEN', 
-    TOKEN = 'TOKEN'
+    BEARER = 'TOKEN'
 }

@@ -26,6 +26,17 @@ export class AssertionContext {
     address: string;
 }
 
+export class ApiTrace {
+    requestId: number;
+    requestName: string;
+    requestDescription: string;
+    requestMethod: string;
+    requestUri: string;
+    requestHeaders: { [key: string]: string };
+    requestBody: string;
+    assertionStatus: CompareStatus;
+}
+
 export class ApiTraceGroup {
     id: number;
     user: string;
@@ -55,11 +66,15 @@ export class ApiResponseServer {
 }
 
 export class ComparatorData {
-    request: ApiRequest;
+    apiTrace: ApiTrace;
     responseComparator: ResponseComparator;
 }
 
 export class Data {
     tableElements: Array<AssertionResultServer>;
     environments: Array<ApiServerConfig>;
+}
+
+export enum CompareStatus {
+    SKIP, ERROR, FAIL, OK
 }
